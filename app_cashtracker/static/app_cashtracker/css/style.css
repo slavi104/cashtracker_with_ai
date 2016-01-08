@@ -70,7 +70,7 @@ body {
   padding: 5%;
   position: relative;
   padding-top: 10%;
-  width: 100%;
+  width: 60%;
   max-height: 83%;
   overflow-y: auto;
   padding-bottom: 10%;
@@ -163,7 +163,7 @@ hr {
 }
 
 .login-label {
-  font-size: 2.5em;
+  font-size: 2.0em;
 }
 
 .remember-me-container {
@@ -191,8 +191,8 @@ hr {
 }
 
 div#settings_menu {
-  position: absolute;
-  width: 100%;
+  position: relative;
+  width: 40%;
   z-index: 100;
   background: #76B800;
   left: 0;

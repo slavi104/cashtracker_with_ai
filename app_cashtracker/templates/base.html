@@ -15,7 +15,7 @@
 <body id="body">
     {% if logged_user %}
     <span id='menu_button_holder'>
-        <img id="menu_button" data-showed_menu="0" src="{% static 'app_cashtracker/images/menu.png' %}">
+        <img id="menu_button" style="display:none;" data-showed_menu="0" src="{% static 'app_cashtracker/images/menu.png' %}">
     </span>
     <span id='home_button_holder'>
         <img id="home_button" src="{% static 'app_cashtracker/images/home.png' %}">
@@ -27,7 +27,7 @@
         </div>
     </div>
     {% if logged_user %}
-    <div id="settings_menu" style="display:none;">
+    <div id="settings_menu" style="display:inline-block;">
         <div id="user_settings_info">
             {{ logged_user.first_name }} {{ logged_user.last_name }}
         </div>
@@ -41,7 +41,7 @@
         </div>
     </div>
     {% endif %}
-    <div class="row-fluid" id="content">
+    <div style="display: inline-block;float: right;" id="content">
         {% block content %}{% endblock %}
     </div>
     <div class="row-fluid" id="content_background">
