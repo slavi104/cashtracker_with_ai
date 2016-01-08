@@ -1,4 +1,6 @@
 from app_cashtracker.views.General import *
+from app_cashtracker.helpers.ai import *
+from datetime import datetime, time
 
 
 def edit_categories(request):
@@ -130,3 +132,32 @@ def delete_category_action(request, category_id=0):
         print('Error in delete category')
 
     return HttpResponseRedirect(reverse('app_cashtracker:edit_categories'))
+
+
+def select_category(request):
+
+    user_id = request.session.get('user_id', False)
+
+    if not user_id:
+        return HttpResponseRedirect(reverse('app_cashtracker:login'))
+
+    params = request.POST
+    result = {}
+    try:
+        category = Category.objects.filter(
+            is_active=1,
+            user_id=user_id
+        ).order_by('?')[:1][0]
+        subcategory = Subcategory.objects.filter(
+            category_id=category.id,
+            is_active=1
+        ).order_by('?')[:1][0]
+
+        result['category_id'] = category.id
+        result['subcategory_id'] = subcategory.id
+        result['success'] = 1
+    except Exception:
+        result['success'] = 0
+        result['message'] = 'Error in select category'
+
+    return HttpResponse(json.dumps(result, separators=(',', ':')))

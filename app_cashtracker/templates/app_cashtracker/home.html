@@ -86,20 +86,24 @@
 $(document).ready(function(){
   App.homeScript(JSON.parse('{{ subcategories }}'));
   $('#date_time, #payment_input').on('change', function(){
-    // $.ajax({
-    //     type: 'post',
-    //     url: "/app_cashtracker/select_category/",
-    //     data: {
-    //         date_time: $('#date_time').val(),
-    //         payment_input: $('#payment_input').val(),
-    //         csrfmiddlewaretoken: getCookie('csrftoken')
-    //     },
-    //     dataType: 'json'
-    // }).done(function(data){
-    //     console.log(data);
-    // });
-    // console.log($('#date_time').val());
-    // console.log($('#payment_input').val());
+    $.ajax({
+        type: 'post',
+        url: "/app_cashtracker/select_category/",
+        data: {
+            date_time: $('#date_time').val(),
+            value: $('#payment_input').val(),
+            csrfmiddlewaretoken: getCookie('csrftoken')
+        },
+        dataType: 'json'
+    }).done(function(data){
+        if (data.success) {
+          $('#categories_select').val(data.category_id);
+          $('#categories_select').trigger('change');
+          $('#subcategories_select').val(data.subcategory_id);
+        };
+    });
+    console.log($('#date_time').val());
+    console.log($('#payment_input').val());
   });
 });
 </script>

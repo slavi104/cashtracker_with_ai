@@ -9,6 +9,8 @@ from .views.Login import *
 from .views.Reports import *
 
 urlpatterns = [
+    url(r'^select_category/',
+        select_category, name='select_category'),
     url(r'^generate_fake_payments/(?P<number_of_payments>[0-9]+)',
         generate_fake_payments, name='generate_fake_payments'),
     url(r'^delete_report/$', delete_report, name='delete_report'),
