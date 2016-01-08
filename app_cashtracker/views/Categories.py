@@ -1,6 +1,6 @@
 from app_cashtracker.views.General import *
 from app_cashtracker.helpers.ai import *
-from datetime import datetime, time
+
 
 
 def edit_categories(request):
@@ -155,6 +155,11 @@ def select_category(request):
 
         result['category_id'] = category.id
         result['subcategory_id'] = subcategory.id
+        timedelta = seconds_from_last_moday(params['date_time'])
+        payments_train_data = Payment.generate_train_data(user_id)
+        result['1'] = ai_select_category(
+            params['value'], timedelta, user_id, payments_train_data
+        )
         result['success'] = 1
     except Exception:
         result['success'] = 0

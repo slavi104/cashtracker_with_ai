@@ -6,6 +6,9 @@ from datetime import timedelta
 from decimal import *
 from django.utils import timezone
 
+import datetime
+import time
+
 
 # for password hashing
 import uuid
@@ -66,3 +69,46 @@ def take_date(srting_repr, timestamp=0):
         'beginning': now - timedelta(days=1000)
     }
     return calc_functions.get(srting_repr, now)
+
+
+def seconds_from_last_moday(date_time):
+    date = datetime.datetime.strptime(date_time, "%Y-%m-%d %H:%M:%S")
+    now = time.mktime(date.timetuple())
+    last_monday = time.mktime(
+        (date - datetime.timedelta(days=date.weekday())).timetuple())
+
+    return now-last_monday
+
+
+def ai_select_category(money, timedelta, user_id, payments_train_data):
+    categories_data = tuple()
+    print(money, timedelta, user_id, payments_train_data)
+    # k = int(sys.argv[1:][0])
+    # train_data = TrainData('iris_train.txt')
+    # good_test = 0
+    # with open('iris_test.txt') as test_file:
+    #     test_data = test_file.readlines()
+    #     with open('iris_test_result.txt') as test_result_file:
+    #         result_data = test_result_file.readlines()
+    #         index = 0
+    #         for data in test_data:
+    #             item = Item(data)
+    #             classifier = Classifier(train_data, item)
+    #             result = classifier.execute(k)
+    #             if result != result_data[index].replace("\n", ""):
+    #                 pass
+    #             else:
+    #                 good_test += 1
+    #             index += 1
+
+    #         print('Tests: {}% success!'.format(
+    #             int((good_test/len(test_data))*100))
+    #         )
+
+    # if len(sys.argv[2:]):
+    #     item = Item(sys.argv[2:][0])
+    #     classifier = Classifier(train_data, item)
+    #     result = classifier.execute(k)
+    #     print('Class of item: ', result)
+
+    return categories_data

@@ -30,6 +30,11 @@ class Payment(models.Model):
     user = models.ForeignKey('User')
     is_active = models.BooleanField(default=True)
 
+    def fetch_delta(self):
+        return seconds_from_last_moday(
+            self.date_time.strftime('%Y-%m-%d %H:%M:%S')
+        )
+
     def parse_date(self, payments_for):
         if payments_for == 'today':
             self.date_time = self.date_time.strftime('%H:%M:%S')
@@ -63,6 +68,23 @@ class Payment(models.Model):
             )
 
         return payments
+
+
+    def generate_train_data(user_id):
+        payments = Payment.objects.filter(
+            user_id=user_id,
+            is_active=1
+        )
+        result = {}
+        for payment in payments:
+            result[payment.id] = [
+                payment.value,
+                payment.fetch_delta(),
+                (payment.category_id, payment.subcategory_id)
+            ]
+
+        return result
+
 
     def generate_fake_payments(user, number_payments=100):
 
