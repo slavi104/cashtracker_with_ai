@@ -41,7 +41,7 @@
         </div>
     </div>
     {% endif %}
-    <div style="display: inline-block;float: right;" id="content">
+    <div style="display: inline-block;float: right;{% if logged_user %} width: 60%; {% endif %}" id="content">
         {% block content %}{% endblock %}
     </div>
     <div class="row-fluid" id="content_background">
