@@ -43,7 +43,7 @@ def home(request):
         'currency': user.currency
     })
 
-    if '1' == '1':
+    if is_mobile == '1':
         Category.process(user_id)
         return HttpResponse(
             json.dumps(
