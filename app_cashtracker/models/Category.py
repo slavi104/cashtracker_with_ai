@@ -10,7 +10,7 @@ class Category(models.Model):
     is_active = models.BooleanField(default=True)
     DEFAULT_CATEGORIES = {}
 
-    def process():
+    def process(user_id):
         categories = Category.objects.filter(user_id=1, is_active=1)
         for category in categories:
             Category.DEFAULT_CATEGORIES[category.id] = {}
