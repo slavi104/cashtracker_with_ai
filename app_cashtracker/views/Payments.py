@@ -82,7 +82,11 @@ def add_payment(request):
             Subcategory, id=params['subcategory']
         )
     else:
-        payment.subcategory = 1
+        subcategories = Subcategory.objects.filter(
+            category_id=payment.category.id,
+            is_active=1
+        )
+        payment.subcategory = subcategories.first()
 
     payment.date_time = params['date_time']
     if is_mobile != '1':
