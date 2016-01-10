@@ -8,6 +8,8 @@ class Category(models.Model):
     user = models.ForeignKey('User')
     is_active = models.BooleanField(default=True)
 
+    DEFAULT_CATEGORIES = {}
+
     def get_category_name(category_id=0):
         if not int(category_id):
             return 'All'

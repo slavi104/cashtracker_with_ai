@@ -10,7 +10,8 @@ def home(request):
         return HttpResponseRedirect(reverse('app_cashtracker:login'))
 
     categories = Category.objects.filter(user_id=user_id, is_active=1)
-
+    if categories.count() is 0:
+        pass
     for category in categories:
         subcategories[category.id] = {}
         category_subcategories = Subcategory.objects.filter(

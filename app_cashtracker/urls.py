@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from django.views.decorators.csrf import csrf_exempt
 
 from .views.General import *
 from .views.Categories import *
@@ -30,7 +31,7 @@ urlpatterns = [
     url(r'^edit_profile_action/$',
         edit_profile_action, name='edit_profile_action'),
     url(r'^login/$', login, name='login'),
-    url(r'^login_action/$', login_action, name='login_action'),
+    url(r'^login_action/$', csrf_exempt(login_action), name='login_action'),
     url(r'^logout/$', logout, name='logout'),
     url(r'^register/$', register, name='register'),
     url(r'^register_action/$', register_action, name='register_action'),
