@@ -7,6 +7,8 @@ def edit_categories(request):
 
     user_id = request.session.get('user_id', False)
     categories = Category.objects.filter(user_id=user_id, is_active=1)
+    if categories.count() == 0:
+        categories = Category.objects.filter(user_id=1, is_active=1)
     subcategories = {}
 
     for category in categories:
