@@ -68,7 +68,7 @@ def add_edit_category(request, category_id=0):
     return HttpResponse(template.render(context))
 
 
-def add_edit_category_action(request):
+def add_edit_category_action(request, category_id=0):
 
     user_id = request.session.get('user_id', False)
     params = request.POST

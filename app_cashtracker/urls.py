@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^payments/$', csrf_exempt(payments), name='payments'),
     url(r'^generate_report/$', generate_report, name='generate_report'),
     url(r'^add_payment/$', csrf_exempt(add_payment), name='add_payment'),
-    url(r'^add_edit_category_action/$',
+    url(r'^add_edit_category_action/([0-9]+)',
         add_edit_category_action, name='add_edit_category_action'),
     url(r'^delete_category_action/(?P<category_id>[0-9]+)',
         delete_category_action, name='delete_category_action'),
