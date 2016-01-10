@@ -35,15 +35,16 @@ def login_action(request):
     if user_id:
         if is_mobile is '1':
             return HttpResponse(
-                json.dumps({'user_id': user_id}, separators=(',', ':')))
+                json.dumps(
+                    {'user_id': user_id, 'error': error},
+                    separators=(',', ':'))
+                )
         else:
             return HttpResponseRedirect(reverse('app_cashtracker:home'))
 
     context_vars = {
-        'errors': {
-            'wrong_mail_or_password': error,
-            'user_id': user_id
-        },
+        'error': error,
+        'user_id': user_id
     }
 
     context = RequestContext(request, context_vars)
