@@ -63,6 +63,7 @@ def home(request):
 
 def add_payment(request):
 
+    print(request.POST)
     user_id = request.session.get('user_id', False)
     is_mobile = request.POST.get('mobile')
     if is_mobile == '1':
