@@ -16,15 +16,15 @@ class Category(models.Model):
             categories = Category.objects.filter(user_id=1, is_active=1)
 
         for category in categories:
-            Category.DEFAULT_CATEGORIES[category.id] = {}
-            Category.DEFAULT_CATEGORIES[category.id]['name'] = category.name
-            Category.DEFAULT_CATEGORIES[category.id]['subcategories'] = {}
-            category_subcategories = Subcategory.objects.filter(
-                category_id=category.id,
-                is_active=1
-            )
-            for subcategory in category_subcategories:
-                Category.DEFAULT_CATEGORIES[category.id]['subcategories'][subcategory.id] = subcategory.name
+            Category.DEFAULT_CATEGORIES[category.id] = category.name
+            # Category.DEFAULT_CATEGORIES[category.id]['name'] = category.name
+            # Category.DEFAULT_CATEGORIES[category.id]['subcategories'] = {}
+            # category_subcategories = Subcategory.objects.filter(
+            #     category_id=category.id,
+            #     is_active=1
+            # )
+            # for subcategory in category_subcategories:
+            #     Category.DEFAULT_CATEGORIES[category.id]['subcategories'][subcategory.id] = subcategory.name
 
     def get_category_name(category_id=0):
         if not int(category_id):
