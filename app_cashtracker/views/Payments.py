@@ -64,6 +64,9 @@ def home(request):
 def add_payment(request):
 
     user_id = request.session.get('user_id', False)
+    is_mobile = request.POST.get('mobile')
+    if is_mobile == '1':
+        user_id = request.POST.get('user_id')
 
     if not user_id:
         return HttpResponseRedirect(reverse('app_cashtracker:login'))
@@ -73,14 +76,35 @@ def add_payment(request):
     payment.value = params['value']
     payment.currency = params['currency']
     payment.category = get_object_or_404(Category, id=params['category'])
-    payment.subcategory = get_object_or_404(Subcategory,
-                                            id=params['subcategory'])
+    if params.get('subcategory'):
+        payment.subcategory = get_object_or_404(
+            Subcategory, id=params['subcategory']
+        )
+    else:
+        payment.subcategory = 1
+
     payment.date_time = params['date_time']
-    payment.name = params['name']
-    payment.comment = params['comment']
+    if is_mobile != '1':
+        payment.name = params['name']
+        payment.comment = params['comment']
     payment.user = get_object_or_404(User, id=user_id)
     payment.is_active = True
-    payment.save()
+
+    # payment.save()
+    try:
+        payment.save()
+        success = 1
+    except Exception:
+        success = 0
+
+    if is_mobile == '1':
+        return HttpResponse(
+            json.dumps(
+                {
+                    'success': success
+                },
+                separators=(',', ':'))
+            )
 
     return HttpResponseRedirect(reverse('app_cashtracker:home'))
 
