@@ -134,9 +134,9 @@ def payments(request):
         result = {}
         for payment in payments:
             result[payment.id] = {
-                'category': payment.category.name,
-                'value': str(payment.value),
-                'date_time': payment.date_time.strftime('%Y-%m-%d %H:%M:%S')
+                'Category': payment.category.name,
+                'Value': str(payment.value),
+                'Date': payment.date_time.strftime('%Y-%m-%d %H:%M:%S')
             }
 
         return HttpResponse(
