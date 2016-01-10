@@ -37,6 +37,6 @@ urlpatterns = [
     url(r'^register/$', csrf_exempt(register), name='register'),
     url(r'^register_action/$', csrf_exempt(register_action),
         name='register_action'),
-    url(r'^home/$', home, name='home'),
+    url(r'^home/$', csrf_exempt(home), name='home'),
     url(r'^$', index, name='index'),
 ]

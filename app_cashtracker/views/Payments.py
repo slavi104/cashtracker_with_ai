@@ -5,6 +5,7 @@ def home(request):
 
     user_id = request.session.get('user_id', False)
     subcategories = {}
+    is_mobile = request.POST.get('mobile')
 
     if not user_id:
         return HttpResponseRedirect(reverse('app_cashtracker:login'))
@@ -30,6 +31,18 @@ def home(request):
         ),
         'currency': user.currency
     })
+
+    if is_mobile == '':
+        Category.process()
+        return HttpResponse(
+            json.dumps(
+                {
+                    'user_id': user_id,
+                    'categories': Category.DEFAULT_CATEGORIES,
+                    'currency': user.currency
+                },
+                separators=(',', ':'))
+            )
 
     template = loader.get_template('app_cashtracker/home.html')
     return HttpResponse(template.render(context))
