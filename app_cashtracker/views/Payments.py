@@ -6,9 +6,18 @@ def home(request):
     user_id = request.session.get('user_id', False)
     subcategories = {}
     is_mobile = request.POST.get('mobile')
-
+    print(request.POST)
     if not user_id:
-        return HttpResponseRedirect(reverse('app_cashtracker:login'))
+        if is_mobile == '1':
+            return HttpResponse(
+                json.dumps(
+                    {
+                        'error': 'Ti si tup!!!',
+                    },
+                    separators=(',', ':'))
+                )
+        else:
+            return HttpResponseRedirect(reverse('app_cashtracker:login'))
 
     categories = Category.objects.filter(user_id=user_id, is_active=1)
 
