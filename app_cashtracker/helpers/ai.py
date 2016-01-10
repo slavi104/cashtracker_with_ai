@@ -17,18 +17,16 @@ class TrainData(object):
 
     """All train data used from artificial intelligence."""
 
-    def __init__(self, data_file):
+    def __init__(self, raw_data):
         super(TrainData, self).__init__()
-        with open(data_file) as f:
-            self.raw_data = f.readlines()
+        self.raw_data = raw_data
         self.data = dict()
         self.process()
 
     def process(self):
-        for row in self.raw_data:
-            data = row.split(',')
-            class_id = data.pop().replace("\n", "")
-            data = [float("{0:.2f}".format(float(x))) for x in data]
+        for payment_id, data in self.raw_data.items():
+            class_id = data
+            # data = [float("{0:.2f}".format(float(x))) for x in data]
             if class_id in self.data:
                 self.data[class_id].append(data)
             else:

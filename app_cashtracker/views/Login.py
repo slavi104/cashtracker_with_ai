@@ -36,13 +36,15 @@ def login_action(request):
 
     context_vars = {
         'errors': {
-            'wrong_mail_or_password': error
+            'wrong_mail_or_password': error,
+            'user_id': user_id
         },
     }
 
     context = RequestContext(request, context_vars)
     template = loader.get_template('app_cashtracker/login.html')
-    return HttpResponse(template.render(context))
+    return HttpResponse(json.dumps(context_vars, separators=(',', ':')))
+    # return HttpResponse(template.render(context))
 
 
 def logout(request):

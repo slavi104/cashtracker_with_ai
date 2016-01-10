@@ -9,7 +9,7 @@ from django.utils import timezone
 import datetime
 import time
 
-
+from app_cashtracker.helpers.ai import *
 # for password hashing
 import uuid
 import hashlib
@@ -82,9 +82,9 @@ def seconds_from_last_moday(date_time):
 
 def ai_select_category(money, timedelta, user_id, payments_train_data):
     categories_data = tuple()
-    print(money, timedelta, user_id, payments_train_data)
-    # k = int(sys.argv[1:][0])
-    # train_data = TrainData('iris_train.txt')
+    # print(money, timedelta, user_id, payments_train_data)
+    train_data = TrainData(payments_train_data)
+    print(train_data.data)
     # good_test = 0
     # with open('iris_test.txt') as test_file:
     #     test_data = test_file.readlines()
