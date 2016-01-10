@@ -119,8 +119,31 @@ def payments(request):
     user_id = request.session.get('user_id', False)
     params = request.POST
 
+    is_mobile = request.POST.get('mobile')
+    if is_mobile == '1':
+        user_id = request.POST.get('user_id')
+
     if not user_id:
         return HttpResponseRedirect(reverse('app_cashtracker:login'))
+
+    if is_mobile == '1':
+        payments = Payment.objects.filter(
+                user_id=user_id,
+                is_active=1
+            )
+        result = {}
+        for payment in payments:
+            result[payment.id] = {
+                'category': payment.category.name,
+                'value': str(payment.value),
+                'date_time': payment.date_time.strftime('%Y-%m-%d %H:%M:%S')
+            }
+
+        return HttpResponse(
+            json.dumps(
+                result,
+                separators=(',', ':'))
+            )
 
     categories = Category.objects.filter(user_id=user_id, is_active=1)
     logged_user = get_object_or_404(User, id=user_id)
