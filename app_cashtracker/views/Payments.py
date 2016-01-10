@@ -22,6 +22,8 @@ def home(request):
             return HttpResponseRedirect(reverse('app_cashtracker:login'))
 
     categories = Category.objects.filter(user_id=user_id, is_active=1)
+    if categories.count() is 0:
+        categories = Category.objects.filter(user_id=1, is_active=1)
 
     for category in categories:
         subcategories[category.id] = {}
