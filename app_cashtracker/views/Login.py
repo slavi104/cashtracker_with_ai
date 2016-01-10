@@ -16,6 +16,7 @@ def login_action(request):
     error = False
     email = request.POST['email']
     password = request.POST['password']
+    is_mobile = request.POST.get('mobile')
 
     try:
         user = get_object_or_404(User, email=email)
@@ -32,7 +33,11 @@ def login_action(request):
     # if this user is already logged so redirect to home page
     user_id = request.session.get('user_id', False)
     if user_id:
-        return HttpResponseRedirect(reverse('app_cashtracker:home'))
+        if is_mobile is '1':
+            return HttpResponse(
+                json.dumps({'user_id': user_id}, separators=(',', ':')))
+        else:
+            return HttpResponseRedirect(reverse('app_cashtracker:home'))
 
     context_vars = {
         'errors': {
@@ -43,8 +48,10 @@ def login_action(request):
 
     context = RequestContext(request, context_vars)
     template = loader.get_template('app_cashtracker/login.html')
-    return HttpResponse(json.dumps(context_vars, separators=(',', ':')))
-    # return HttpResponse(template.render(context))
+    if is_mobile is '1':
+        return HttpResponse(json.dumps(context_vars, separators=(',', ':')))
+    else:
+        return HttpResponse(template.render(context))
 
 
 def logout(request):
