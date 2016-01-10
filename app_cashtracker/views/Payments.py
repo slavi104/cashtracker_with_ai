@@ -6,6 +6,8 @@ def home(request):
     user_id = request.session.get('user_id', False)
     subcategories = {}
     is_mobile = request.POST.get('mobile')
+    if is_mobile:
+        user_id = request.POST.get('user_id')
     print(request.POST)
     if not user_id:
         if is_mobile == '1':
